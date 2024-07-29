@@ -4,6 +4,7 @@ import Home from "./Home";
 import Create from "./Create";
 import Register from "./Register";
 import NavBar from "./NavBar";
+import EditTask from "./EditTask";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route path='/home' Component={Home} />
           <Route path='/create' Component={Create} />
           <Route path='/register' Component={Register} />
+          <Route path='/edit' Component={EditTask} />
         </Routes>
       </div>
     </Router>
