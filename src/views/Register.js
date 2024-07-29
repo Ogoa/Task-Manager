@@ -1,16 +1,20 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useContext } from 'react';
+import { Link } from 'react-router-dom';
+import AuthContext from '../context/AuthContext';
 
 const Register = () => {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [password2, setPassword2] = useState('');
     const [isLoading, setIsLoading] = useState(false);
-    const navigate = useNavigate();
+
+    const { registerUser } = useContext(AuthContext);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setIsLoading(true);
+        await registerUser(email, username, password, password2);
     }
 
     return (
@@ -41,12 +45,14 @@ const Register = () => {
                 <input
                     type='password'
                     required
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    value={password2}
+                    onChange={(e) => setPassword2(e.target.value)}
                 />
                 {!isLoading && <button>Sign Up</button>}
                 {isLoading && <button disabled>Signing Up...</button>}
             </form>
+            <p>Already have an account?</p>
+            <Link to="/login">Login Here</Link>
         </div>
     );
 }
