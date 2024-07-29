@@ -1,23 +1,29 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Login from "../Login";
+import Login from "./Login";
 import Home from "./Home";
-import Create from "../Create";
-import Register from "../Register";
+import Create from "./Create";
+import Register from "./Register";
+import EditTask from "./EditTask";
 import NavBar from "./NavBar";
-import EditTask from "../EditTask";
+import PrivateRoute from "../utils/PrivateRoute";
+import { AuthProvider } from "../context/AuthContext";
 
 function App() {
   return (
     <Router>
-      <div className='app'>
-        <NavBar />
-        <Routes>
-          <Route path='/login' Component={Login} />
-          <Route path='/home' Component={Home} />
-          <Route path='/create' Component={Create} />
-          <Route path='/register' Component={Register} />
-          <Route path='/edit' Component={EditTask} />
-        </Routes>
+      <div className="app">
+        <AuthProvider>
+          <NavBar />
+          <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route element={<PrivateRoute />}>
+              <Route path="/" element={<Home />} />
+              <Route path="/create" element={<Create />} />
+              <Route path="/edit" element={<EditTask />} />
+            </Route>
+          </Routes>
+        </AuthProvider>
       </div>
     </Router>
   );
