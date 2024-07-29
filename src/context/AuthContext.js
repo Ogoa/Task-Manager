@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect } from "react";
-import { jwt_decode } from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 const swal = require("sweetalert2");  // for a sweet alert
 
@@ -9,20 +9,18 @@ export default AuthContext;
 
 export const AuthProvider = ({ children }) => {
     const [authTokens, setAuthTokens] = useState(() => {
-        localStorage.getItem("authTokens")
-            ? JSON.parse(localStorage.getItem("authTokens"))
-            : null
+        const tokens = localStorage.getItem("authTokens");
+        return tokens ? JSON.parse(tokens) : null;
     });
 
     const [user, setUser] = useState(() => {
-        localStorage.getItem("authTokens")
-            ? jwt_decode(localStorage.getItem("authTokens"))
-            : null
+        const tokens = localStorage.getItem("authTokens");
+        return tokens ? jwtDecode(JSON.parse(tokens).access) : null;
     });
 
     const [loading, setLoading] = useState(true);
 
-    const history = useNavigate();
+    const navigate = useNavigate();
 
     const loginUser = async (email, password) => {
         const response = await fetch("http://127.0.0.1:8000/api/token/", {
@@ -40,9 +38,9 @@ export const AuthProvider = ({ children }) => {
         if (response.status === 200) {
             console.log("Logged In");
             setAuthTokens(data);
-            setUser(jwt_decode(data.access));
+            setUser(jwtDecode(data.access));
             localStorage.setItem("authTokens", JSON.stringify(data));
-            history.push("/")
+            navigate("/");
             swal.fire({
                 icon: "success",
                 title: "Login Successful",
@@ -66,7 +64,7 @@ export const AuthProvider = ({ children }) => {
                 showConfirmButton: false,
             });
         }
-    }
+    };
 
     const registerUser = async (email, username, password, password2) => {
         const response = await fetch("http://127.0.0.1:8000/api/register/", {
@@ -80,7 +78,7 @@ export const AuthProvider = ({ children }) => {
         })
 
         if (response.status === 201) {
-            history.push("/login");
+            navigate("/login");
             swal.fire({
                 title: "Registration Successful",
                 icon: "success",
@@ -103,13 +101,13 @@ export const AuthProvider = ({ children }) => {
                 showConfirmButton: false,
             });
         }
-    }
+    };
 
     const logoutUser = () => {
         setAuthTokens(null);
         setUser(null);
         localStorage.removeItem("authTokens");
-        history.push("/login");
+        navigate("/login");
         swal.fire({
             title: "Logged out",
             icon: "success",
@@ -119,7 +117,7 @@ export const AuthProvider = ({ children }) => {
             timerProgressBar: true,
             showConfirmButton: false,
         });
-    }
+    };
 
     const contextData = {
         user,
@@ -129,14 +127,14 @@ export const AuthProvider = ({ children }) => {
         registerUser,
         loginUser,
         logoutUser,
-    }
+    };
 
     useEffect(() => {
         if (authTokens) {
-            setUser(jwt_decode(authTokens.access));
+            setUser(jwtDecode(authTokens.access));
         }
         setLoading(false);
-    }, [authTokens, loading])
+    }, [authTokens, loading]);
 
     return (
         <AuthContext.Provider value={contextData}>
