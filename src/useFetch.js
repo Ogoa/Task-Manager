@@ -1,39 +1,28 @@
-import { useEffect, useState } from 'react'
+import { useState, useEffect } from "react";
+import useAxios from "./utils/useAxios";
 
 const useFetch = (url) => {
     const [data, setData] = useState(null);
+    const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [isLoading, setIsLoading] = useState(true);
+    const axiosInstance = useAxios();
 
     useEffect(() => {
-        const abortControl = new AbortController();
+        const fetchData = async () => {
+            try {
+                const response = await axiosInstance.get(url);
+                setData(response.data);
+                setLoading(false);
+            } catch (err) {
+                setError(err.message);
+                setLoading(false);
+            }
+        };
 
-        fetch(url, { signal: abortControl.signal })
-            .then(res => {
-                if (!res.ok) {
-                    throw Error('Could not fetch the resource'); // if HTTP response status is anything other than 2xx
-                }
-
-                return res.json();
-            })
-            .then(data => { // Successful response
-                setIsLoading(false);
-                setData(data);
-                setError(false);
-            })
-            .catch(error => {
-                if (error.name === 'AbortError') {
-                    console.log('fetch aborted')
-                } else {
-                    console.log(error.message);
-                    setError(error.message);
-                    setIsLoading(false);
-                }
-            })
-        return () => abortControl.abort();
+        fetchData();
     }, [url]);
 
-    return { data, isLoading, error };
-}
+    return { data, loading, error };
+};
 
 export default useFetch;
