@@ -1,13 +1,21 @@
-import { useParams } from 'react-router-dom';
-import { useHistory } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom';
 import useFetch from "../useFetch";
+import useAxios from "../utils/useAxios";
 
 const TaskDetails = () => {
     const { id } = useParams();
-    const { data: task, isLoading, error } = useFetch('');
-    const history = useHistory();
+    const { data: task, isLoading, error } = useFetch(`/tasks/${id}/`);
+    const navigate = useNavigate();
+    const axiosInstance = useAxios();
 
-    /* TODO: Add handleDelete */
+    const handleDelete = async () => {
+        try {
+            await axiosInstance.delete(`/tasks/${id}/`);
+            navigate('/');
+        } catch (err) {
+            console.error(err);
+        }
+    }
 
     return (
         <div className='task-details'>
@@ -17,7 +25,8 @@ const TaskDetails = () => {
                 <article>
                     <h2>{task.title}</h2>
                     <p>Description:</p>
-                    <div>{title.description}</div>
+                    <div>{task.description}</div>
+                    <button onClick={handleDelete}>Delete Task</button>
                 </article>
             )}
         </div>

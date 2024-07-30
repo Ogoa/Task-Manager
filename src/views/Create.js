@@ -1,18 +1,27 @@
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import useAxios from "../utils/useAxios";
 
 const Create = () => {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [isLoading, setIsLoading] = useState(false);
-    const history = useNavigate();
+    const navigate = useNavigate();
+    const axiosInstance = useAxios();
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        const newTask = { title, description }
+        const newTask = { title, description };
 
         setIsLoading(true);
-        /* TODO */
+        try {
+            await axiosInstance.post('/tasks/', newTask);
+            setIsLoading(false);
+            navigate('/');
+        } catch (err) {
+            console.error(err);
+            setIsLoading(false);
+        }
     }
 
     return (

@@ -4,6 +4,7 @@ import Home from "./Home";
 import Create from "./Create";
 import Register from "./Register";
 import EditTask from "./EditTask";
+import TaskDetails from "./TaskDetails";
 import NavBar from "./NavBar";
 import PrivateRoute from "../utils/PrivateRoute";
 import { AuthProvider } from "../context/AuthContext";
@@ -20,7 +21,8 @@ function App() {
             <Route element={<PrivateRoute />}>
               <Route path="/" element={<Home />} />
               <Route path="/create" element={<Create />} />
-              <Route path="/edit" element={<EditTask />} />
+              <Route path="/edit/:id" element={<EditTask />} />
+              <Route path="/tasks/:id" element={<TaskDetails />} />
             </Route>
           </Routes>
         </AuthProvider>
