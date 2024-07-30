@@ -1,13 +1,179 @@
+/* index.css */
+
+/* General styles */
 body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f2f5;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+h2 {
+  color: #333;
+}
+
+/* Navigation Bar */
+.navbar {
+  background-color: #333;
+  color: white;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar a {
+  color: white;
+  text-decoration: none;
+  margin-left: 1rem;
+}
+
+.navbar a:hover {
+  text-decoration: underline;
+}
+
+/* Login and Register screens */
+.login-screen, .register-screen {
+  max-width: 400px;
+  margin: 50px auto;
+  padding: 20px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.login-screen label, .register-screen label {
+  display: block;
+  margin-bottom: 8px;
+  color: #333;
+}
+
+.login-screen input, .register-screen input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.login-screen button, .register-screen button {
+  width: 100%;
+  padding: 10px;
+  background-color: #5cb85c;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.login-screen button:disabled, .register-screen button:disabled {
+  background-color: #aaa;
+}
+
+.login-screen p, .register-screen p {
+  text-align: center;
+}
+
+/* Create Task screen */
+.create-task {
+  max-width: 600px;
+  margin: 50px auto;
+  padding: 20px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.create-task form label {
+  display: block;
+  margin-bottom: 8px;
+  color: #333;
+}
+
+.create-task form input, .create-task form textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.create-task form button {
+  width: 100%;
+  padding: 10px;
+  background-color: #5cb85c;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.create-task form button:disabled {
+  background-color: #aaa;
+}
+
+/* Home screen */
+.home {
+  max-width: 800px;
+  margin: 50px auto;
+  padding: 20px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.task-list {
+  margin-top: 20px;
+}
+
+.task-preview {
+  padding: 20px;
+  margin-bottom: 10px;
+  background-color: #f9f9f9;
+  border-radius: 4px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.task-preview h2 {
+  margin: 0;
+  color: #333;
+}
+
+.task-preview a {
+  text-decoration: none;
+  color: #333;
+}
+
+.task-preview a:hover {
+  text-decoration: underline;
+}
+
+/* Task Details */
+.task-details {
+  max-width: 800px;
+  margin: 50px auto;
+  padding: 20px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.task-details article {
+  margin-top: 20px;
+}
+
+.task-details article h2 {
+  margin: 0;
+  color: #333;
+}
+
+.task-details article p {
+  margin: 10px 0;
+}
+
+.task-details article div {
+  background-color: #f9f9f9;
+  padding: 10px;
+  border-radius: 4px;
 }
